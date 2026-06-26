@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Bookstore.Common</id>
+    <version>1.0.0</version>
+    <authors>Bob's Used Bookstore</authors>
+    <description>Common utilities for Bob's Used Bookstore</description>
+    <repository type="git" commit="16c245adf03be596a2f30e69263355a9d361eb10" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.8" />
+    </dependencies>
+  </metadata>
+</package>

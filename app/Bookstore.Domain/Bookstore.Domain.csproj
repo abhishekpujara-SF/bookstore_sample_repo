@@ -1,12 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <RootNamespace>Bookstore.Domain</RootNamespace>
     <AssemblyName>Bookstore.Domain</AssemblyName>
-    
-    <!-- NuGet Package Properties -->
     <PackageId>Bookstore.Domain</PackageId>
     <Version>1.0.0</Version>
     <Authors>Bob's Used Bookstore</Authors>
@@ -14,36 +12,6 @@
     <Description>Domain layer for Bob's Used Bookstore application</Description>
     <PackageTags>bookstore;domain</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-
-  <!-- .NET Framework specific settings -->
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
-    <DefineConstants>NETFRAMEWORK</DefineConstants>
-  </PropertyGroup>
-
-  <!-- .NET 8 specific settings -->
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <DefineConstants>NETCORE</DefineConstants>
-  </PropertyGroup>
-
-  <!-- Common references for both frameworks -->
-  <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-  </ItemGroup>
-
-  <!-- .NET Framework specific references -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
 
 </Project>

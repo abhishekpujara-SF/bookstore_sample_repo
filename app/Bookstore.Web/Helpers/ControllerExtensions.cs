@@ -1,5 +1,5 @@
-﻿using System.Web.Mvc;
-using Bookstore.Common;
+﻿using Bookstore.Common;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bookstore.Web.Helpers
 {

@@ -3,7 +3,8 @@ using Bookstore.Web.Helpers;
 using Bookstore.Domain.Customers;
 using Bookstore.Domain.Carts;
 using Bookstore.Web.ViewModel.ShoppingCart;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bookstore.Web.Controllers
 {

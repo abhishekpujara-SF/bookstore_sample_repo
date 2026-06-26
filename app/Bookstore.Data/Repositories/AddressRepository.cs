@@ -1,6 +1,6 @@
-﻿using Bookstore.Domain.Addresses;
+using Bookstore.Domain.Addresses;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,9 +34,10 @@ namespace Bookstore.Data.Repositories
             return await dbContext.Address.Where(x => x.Customer.Sub == sub && x.IsActive == true).ToListAsync();
         }
 
-        async Task IAddressRepository.AddAsync(Address address)
+        Task IAddressRepository.AddAsync(Address address)
         {
-            await Task.Run(() => dbContext.Address.Add(address));
+            dbContext.Address.Add(address);
+            return Task.CompletedTask;
         }
 
         public async Task SaveChangesAsync()
