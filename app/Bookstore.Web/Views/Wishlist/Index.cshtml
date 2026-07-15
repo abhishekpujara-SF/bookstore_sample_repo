@@ -1,10 +1,10 @@
-﻿@model Bookstore.Web.ViewModel.Wishlist.WishlistIndexViewModel
+@model Bookstore.Web.ViewModel.Wishlist.WishlistIndexViewModel
 
 @{
     ViewData["Title"] = "Wishlist";
 }
 
-@Html.Partial("_Notification")
+<partial name="_Notification" />
 
 <div class="panel-body">
 
@@ -37,10 +37,9 @@
                     </td>
                     <td>
                         <div class="hstack gap-2">
-                            @using (Html.BeginForm("MoveToShoppingCart", "Wishlist", new { shoppingCartItemId = item.ShoppingCartItemId }))
-                            {
+                            <form asp-action="MoveToShoppingCart" asp-controller="Wishlist" asp-route-shoppingCartItemId="@item.ShoppingCartItemId" method="post">
                                 <button type="submit" class="btn btn-link">Move to shopping cart</button>
-                            }
+                            </form>
                             <div class="vr"></div>
                             <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-shoppingCartItemId="@item.ShoppingCartItemId">Remove</button>
                         </div>
@@ -50,10 +49,9 @@
         </tbody>
     </table>
 
-    @using (Html.BeginForm("MoveAllItemsToShoppingCart", "Wishlist"))
-    {
+    <form asp-action="MoveAllItemsToShoppingCart" asp-controller="Wishlist" method="post">
         <button type="submit" class="btn">Move all items to shopping cart</button>
-    }
+    </form>
 
     <div id="confirmDeleteModal" class="modal" tabindex="-1">
         <div class="modal-dialog">
@@ -66,11 +64,10 @@
                     <p>Are you sure you want to remove this item from your wishlist?</p>
                 </div>
                 <div class="modal-footer">
-                    @using (Html.BeginForm())
-                    {
+                    <form method="post">
                         <button id="confirmDeleteButton" type="submit" class="btn btn-primary" formaction="@Url.Action("Delete")">Yes, Remove</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Don't Remove</button>
-                    }
+                    </form>
                 </div>
             </div>
         </div>

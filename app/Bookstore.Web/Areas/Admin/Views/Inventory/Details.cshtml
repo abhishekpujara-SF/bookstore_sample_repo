@@ -1,4 +1,4 @@
-﻿@model Bookstore.Web.Areas.Admin.Models.Inventory.InventoryDetailsViewModel
+@model Bookstore.Web.Areas.Admin.Models.Inventory.InventoryDetailsViewModel
 
 <div class="d-flex m-3">
     <h5 class="me-auto">Book Details</h5>
@@ -55,6 +55,6 @@
 
 <div class="row justify-content-center">
     <div class="col-8">
-        @Html.ActionLink("Back", "Index", new { controller = "Inventory"}, new { @class = "btn btn-primary" })
+        <a asp-action="Index" asp-controller="Inventory" class="btn btn-primary">Back</a>
     </div>
 </div>

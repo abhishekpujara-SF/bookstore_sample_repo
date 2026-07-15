@@ -1,14 +1,14 @@
-﻿@model Bookstore.Web.Areas.Admin.Models.Inventory.InventoryIndexViewModel
+@model Bookstore.Web.Areas.Admin.Models.Inventory.InventoryIndexViewModel
 
 @{
     ViewData["Title"] = "Inventory";
 }
 
-@Html.Partial("_MessageBanner")
+<partial name="_MessageBanner" />
 
 <div class="d-flex m-3">
     <h5 class="me-auto">Inventory</h5>
-    @Html.ActionLink("New Book", "Create", new { controller = "Inventory"}, new { @class = "btn btn-primary" })
+    <a asp-action="Create" asp-controller="Inventory" class="btn btn-primary">New Book</a>
 </div>
 
 <div class="card mx-3">
@@ -58,7 +58,7 @@
             </div>
 
             <div class="col-12">
-                @Html.ActionLink("Clear", "Index", new { controller = "Inventory" }, new { @class = "btn btn-secondary" })
+                <a asp-action="Index" asp-controller="Inventory" class="btn btn-secondary">Clear</a>
             </div>
         </form>
     </div>
@@ -67,7 +67,7 @@
 <div class="card m-3">
     <div class="card-header">
         <div class="d-flex justify-content-end">
-            @Html.Partial("_Paginator")
+            <partial name="_Paginator" />
         </div>
     </div>
 
@@ -102,10 +102,9 @@
                         <td>@book.UpdatedOn.ToShortDateString()</td>
                         <td>
                             <div class="hstack gap-2">
-
-                                @Html.ActionLink("View", "Details", new { controller = "Inventory", id = book.Id }, new { @class = "card-link" })                                
-                                <div class="vr"></div>                               
-                                @Html.ActionLink("Update", "Update", new { controller = "Inventory", id = book.Id }, new { @class = "card-link" })
+                                <a asp-action="Details" asp-controller="Inventory" asp-route-id="@book.Id" class="card-link">View</a>
+                                <div class="vr"></div>
+                                <a asp-action="Update" asp-controller="Inventory" asp-route-id="@book.Id" class="card-link">Update</a>
                             </div>
                         </td>
                     </tr>
@@ -116,7 +115,7 @@
 
     <div class="card-footer">
         <div class="d-flex justify-content-end">
-            @Html.Partial("_Paginator")
+            <partial name="_Paginator" />
         </div>
     </div>
 </div>

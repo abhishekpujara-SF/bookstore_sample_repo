@@ -1,34 +1,72 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace BobsBookstoreClassic.Data
 {
     public sealed class BookstoreConfiguration
     {
-        private static readonly Lazy<BookstoreConfiguration> Lazy = new Lazy<BookstoreConfiguration>(() => new BookstoreConfiguration());
-
-        private static BookstoreConfiguration Instance => Lazy.Value;
+        private static BookstoreConfiguration _instance;
+        private static readonly object _lock = new object();
 
         private readonly Dictionary<string, string> _appSettings = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _connectionStrings = new Dictionary<string, string>();
 
-        private BookstoreConfiguration()
+        private BookstoreConfiguration(IConfiguration configuration)
         {
-            foreach (string key in ConfigurationManager.AppSettings)
+            // Load app settings from IConfiguration (replaces ConfigurationManager.AppSettings)
+            foreach (var kvp in configuration.AsEnumerable())
             {
-                _appSettings[key] = ConfigurationManager.AppSettings[key];
+                if (kvp.Value != null)
+                {
+                    _appSettings[kvp.Key] = kvp.Value;
+                }
+            }
 
+            // Environment variables override configuration values
+            foreach (var key in _appSettings.Keys.ToList())
+            {
                 if (Environment.GetEnvironmentVariable(key) != null)
                 {
                     _appSettings[key] = Environment.GetEnvironmentVariable(key);
                 }
             }
 
-            foreach (ConnectionStringSettings connectionStringSettings in ConfigurationManager.ConnectionStrings)
+            // Load connection strings from IConfiguration (replaces ConfigurationManager.ConnectionStrings)
+            var connectionStringsSection = configuration.GetSection("ConnectionStrings");
+            foreach (var child in connectionStringsSection.GetChildren())
             {
-                _connectionStrings[connectionStringSettings.Name] = connectionStringSettings.ConnectionString;
+                _connectionStrings[child.Key] = child.Value;
+            }
+        }
 
+        /// <summary>
+        /// Initializes the singleton instance with an IConfiguration provided by the host via DI.
+        /// Must be called once at application startup before any other usage.
+        /// </summary>
+        public static void Initialize(IConfiguration configuration)
+        {
+            lock (_lock)
+            {
+                _instance = new BookstoreConfiguration(configuration);
+            }
+        }
+
+        private static BookstoreConfiguration Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new InvalidOperationException(
+                        "BookstoreConfiguration has not been initialized. Call Initialize(IConfiguration) at application startup.");
+                }
+                return _instance;
             }
         }
 
@@ -39,13 +77,14 @@ namespace BobsBookstoreClassic.Data
 
         public static string GetSetting(string key)
         {
-            return Instance._appSettings[key];
+            Instance._appSettings.TryGetValue(key, out var value);
+            return value;
         }
 
         public static T GetSetting<T>(string key)
         {
-            var value = Instance._appSettings[key];
-
+            Instance._appSettings.TryGetValue(key, out var value);
+            if (value == null) return default;
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
@@ -56,8 +95,8 @@ namespace BobsBookstoreClassic.Data
 
         public static string GetConnectionString(string key)
         {
-            return Instance._connectionStrings[key];
+            Instance._connectionStrings.TryGetValue(key, out var value);
+            return value;
         }
-
     }
 }

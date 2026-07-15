@@ -1,15 +1,22 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Bookstore.Web.Helpers;
 using Bookstore.Domain.Orders;
 using Bookstore.Web.ViewModel.Orders;
-using System.Web.Mvc;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bookstore.Web.Controllers
 {
     public class OrdersController : Controller
     {
         private readonly IOrderService orderService;
-
         public OrdersController(IOrderService orderService)
         {
             this.orderService = orderService;
@@ -18,14 +25,12 @@ namespace Bookstore.Web.Controllers
         public async Task<ActionResult> Index()
         {
             var orders = await orderService.GetOrdersAsync(User.GetSub());
-
             return View(new OrderIndexViewModel(orders));
         }
 
         public async Task<ActionResult> Details(int id)
         {
             var order = await orderService.GetOrderAsync(id);
-
             return View(new OrderDetailsViewModel(order));
         }
 
@@ -33,9 +38,7 @@ namespace Bookstore.Web.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var dto = new CancelOrderDto(User.GetSub(), id);
-
             await orderService.CancelOrderAsync(dto);
-
             return RedirectToAction("Index");
         }
     }

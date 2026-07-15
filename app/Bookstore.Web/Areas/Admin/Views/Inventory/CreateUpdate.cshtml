@@ -1,4 +1,4 @@
-﻿@using Bookstore.Domain.ReferenceData
+@using Bookstore.Domain.ReferenceData
 
 @model Bookstore.Web.Areas.Admin.Models.Inventory.InventoryCreateUpdateViewModel
 
@@ -58,7 +58,7 @@
                     <div class="input-group">
 
                         @Html.DropDownListFor(a => a.SelectedPublisherId, Model.Publishers, "Select the Publisher", new { @class = "form-select" })
-                        @Html.ActionLink("Add", "Create", new { controller = "ReferenceData", selectedReferenceDataType = ReferenceDataType.Publisher }, new { @class = "btn btn-outline-primary" })                        
+                        <a asp-action="Create" asp-controller="ReferenceData" asp-route-selectedReferenceDataType="@ReferenceDataType.Publisher" class="btn btn-outline-primary">Add</a>
                     </div>
                     <small>@Html.ValidationMessageFor(m => m.SelectedPublisherId, null, new { @class = "text-danger" }) </small>
                 </div>
@@ -67,7 +67,7 @@
                     <label class="form-label" for="GenreSelect">Genre</label>
                     <div class="input-group">
                         @Html.DropDownListFor(a => a.SelectedGenreId, Model.Genres, "Select the Genre", new { @class = "form-select" })
-                        @Html.ActionLink("Add", "Create", new { controller = "ReferenceData", selectedReferenceDataType = ReferenceDataType.Genre }, new { @class = "btn btn-outline-primary" })
+                        <a asp-action="Create" asp-controller="ReferenceData" asp-route-selectedReferenceDataType="@ReferenceDataType.Genre" class="btn btn-outline-primary">Add</a>
                     </div>
                     <small>@Html.ValidationMessageFor(m => m.SelectedGenreId, null, new { @class = "text-danger" }) </small>
                 </div>
@@ -76,7 +76,7 @@
                     <label class="form-label" for="BookTypeSelect">Book Type</label>
                     <div class="input-group">
                         @Html.DropDownListFor(a => a.SelectedBookTypeId, Model.BookTypes, "Select the type", new { @class = "form-select" })
-                        @Html.ActionLink("Add", "Create", new { controller = "ReferenceData", selectedReferenceDataType = ReferenceDataType.BookType }, new { @class = "btn btn-outline-primary" })
+                        <a asp-action="Create" asp-controller="ReferenceData" asp-route-selectedReferenceDataType="@ReferenceDataType.BookType" class="btn btn-outline-primary">Add</a>
                     </div>
                     <small>@Html.ValidationMessageFor(m => m.SelectedBookTypeId, null, new { @class = "text-danger" }) </small>
                 </div>
@@ -87,7 +87,7 @@
 
                     <div class="input-group">
                         @Html.DropDownListFor(a => a.SelectedConditionId, Model.BookConditions, "Select the condition", new { @class = "form-select" })
-                        @Html.ActionLink("Add", "Create", new { controller = "ReferenceData", selectedReferenceDataType = ReferenceDataType.Condition }, new { @class = "btn btn-outline-primary" })
+                        <a asp-action="Create" asp-controller="ReferenceData" asp-route-selectedReferenceDataType="@ReferenceDataType.Condition" class="btn btn-outline-primary">Add</a>
                     </div>
                     <small>@Html.ValidationMessageFor(m => m.SelectedConditionId, null, new { @class = "text-danger" }) </small>
                 </div>
@@ -111,7 +111,7 @@
     <div class="row justify-content-center">
         <div class="col-8 d-grid gap-2 d-md-block">
             <button class="btn btn-primary" type="submit">Save</button>
-            @Html.ActionLink("Back", "Index", new { controller = "Inventory" }, new { @class = "btn btn-secondary" })
+            <a asp-action="Index" asp-controller="Inventory" class="btn btn-secondary">Back</a>
         </div>
     </div>
 </form>
@@ -138,5 +138,5 @@
         }
     </script>
 
-    @{Html.RenderPartial("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
 }

@@ -1,20 +1,20 @@
-﻿@model Bookstore.Web.Areas.Admin.Models.PaginatedViewModel
+@model Bookstore.Web.Areas.Admin.Models.PaginatedViewModel
 
 <nav aria-label="Page navigation example">
     <ul class="pagination mb-0">
         <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-            @Html.ActionLink("Previous", "Index", new { pageIndex = Model.PageIndex - 1 }, new { @class = "page-link" })
+            <a class="page-link" asp-action="Index" asp-route-pageIndex="@(Model.PageIndex - 1)">Previous</a>
         </li>
 
         @foreach (var button in Model.PaginationButtons)
         {
             <li class="page-item @(Model.PageIndex == button ? "disabled" : "")">
-                @Html.ActionLink(button.ToString(), "Index", new { pageIndex = button }, new { @class = "page-link" })
+                <a class="page-link" asp-action="Index" asp-route-pageIndex="@button">@button</a>
             </li>
         }
 
         <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
-            @Html.ActionLink("Next", "Index", new { pageIndex = Model.PageIndex + 1 }, new { @class = "page-link" })
+            <a class="page-link" asp-action="Index" asp-route-pageIndex="@(Model.PageIndex + 1)">Next</a>
         </li>
     </ul>
 </nav>

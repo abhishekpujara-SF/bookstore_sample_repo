@@ -1,5 +1,14 @@
-﻿
-using System.Web.Mvc;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bookstore.Web.Areas.Admin.Controllers
 {
@@ -21,7 +30,6 @@ namespace Bookstore.Web.Areas.Admin.Controllers
             //var exception = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
             //ViewData["Path"] = exception?.Path;
             //var error = Problem();
-
             //ViewData["StatusCode"] = error.StatusCode;
             return View("~/Views/Error/Index.cshtml");
         }

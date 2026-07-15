@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using Bookstore.Web.Helpers;
 
 namespace Bookstore.Web.Tests

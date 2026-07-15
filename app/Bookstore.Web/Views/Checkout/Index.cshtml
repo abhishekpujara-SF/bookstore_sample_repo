@@ -1,4 +1,4 @@
-﻿@model Bookstore.Web.ViewModel.Checkout.CheckoutIndexViewModel
+@model Bookstore.Web.ViewModel.Checkout.CheckoutIndexViewModel
 
 <div class="panel-body">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -25,7 +25,7 @@
         <h2>Total price :$@Model.Total</h2>
     </div>
 
-    <form method="post">
+    <form method="post" asp-action="Index" asp-controller="Checkout">
         <table class="table">
             <thead>
             <tr>
@@ -66,7 +66,7 @@
                         @Html.DisplayFor(modelItem => address.ZipCode)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Update", "Address", new { id = address.Id, returnUrl = Url.Action() }, null)
+                        <a asp-action="Update" asp-controller="Address" asp-route-id="@address.Id" asp-route-returnUrl="@Url.Action()">Edit</a>
                     </td>
                 </tr>
             }
@@ -86,7 +86,7 @@
 
     <div>
         <p style="text-align: center">
-            @Html.ActionLink("Add address", "Create", "Address", new { returnUrl = Url.Action() }, null)
+            <a asp-action="Create" asp-controller="Address" asp-route-returnUrl="@Url.Action()">Add address</a>
         </p>
     </div>
 

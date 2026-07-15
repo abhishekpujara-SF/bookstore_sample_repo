@@ -1,8 +1,18 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Bookstore.Web.Areas.Admin.Models.Inventory;
 using Bookstore.Domain.Books;
 using Bookstore.Domain.ReferenceData;
-using System.Web.Mvc;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Bookstore.Web.Areas.Admin.Controllers
 {
@@ -10,7 +20,6 @@ namespace Bookstore.Web.Areas.Admin.Controllers
     {
         private readonly IBookService bookService;
         private readonly IReferenceDataService referenceDataService;
-
         public InventoryController(IBookService bookService, IReferenceDataService referenceDataService)
         {
             this.bookService = bookService;
@@ -21,46 +30,28 @@ namespace Bookstore.Web.Areas.Admin.Controllers
         {
             var books = await bookService.GetBooksAsync(filters, pageIndex, pageSize);
             var referenceDataItems = await referenceDataService.GetAllReferenceDataAsync();
-
             return View(new InventoryIndexViewModel(books, referenceDataItems));
         }
 
         public async Task<ActionResult> Details(int id)
         {
             var book = await bookService.GetBookAsync(id);
-
             return View(new InventoryDetailsViewModel(book));
         }
 
         public async Task<ActionResult> Create()
         {
             var referenceDataItemDtos = await referenceDataService.GetAllReferenceDataAsync();
-
             return View("CreateUpdate", new InventoryCreateUpdateViewModel(referenceDataItemDtos));
         }
 
         [HttpPost]
         public async Task<ActionResult> Create(InventoryCreateUpdateViewModel model)
         {
-            if (!ModelState.IsValid) return await InvalidCreateUpdateView(model);
-
-            var dto = new CreateBookDto(
-                model.Name, 
-                model.Author, 
-                model.SelectedBookTypeId, 
-                model.SelectedConditionId, 
-                model.SelectedGenreId, 
-                model.SelectedPublisherId, 
-                model.Year, 
-                model.ISBN, 
-                model.Summary, 
-                model.Price, 
-                model.Quantity, 
-                model.CoverImage?.InputStream, 
-                model.CoverImage?.FileName);
-
+            if (!ModelState.IsValid)
+                return await InvalidCreateUpdateView(model);
+            var dto = new CreateBookDto(model.Name, model.Author, model.SelectedBookTypeId, model.SelectedConditionId, model.SelectedGenreId, model.SelectedPublisherId, model.Year, model.ISBN, model.Summary, model.Price, model.Quantity, model.CoverImage?.OpenReadStream(), model.CoverImage?.FileName);
             var result = await bookService.AddAsync(dto);
-
             return await ProcessBookResultAsync(model, result, $"{model.Name} has been added to inventory");
         }
 
@@ -68,33 +59,16 @@ namespace Bookstore.Web.Areas.Admin.Controllers
         {
             var book = await bookService.GetBookAsync(id);
             var referenceDataDtos = await referenceDataService.GetAllReferenceDataAsync();
-
             return View("CreateUpdate", new InventoryCreateUpdateViewModel(referenceDataDtos, book));
         }
 
         [HttpPost]
         public async Task<ActionResult> Update(InventoryCreateUpdateViewModel model)
         {
-            if (!ModelState.IsValid) return await InvalidCreateUpdateView(model);
-
-            var dto = new UpdateBookDto(
-                model.Id,
-                model.Name,
-                model.Author,
-                model.SelectedBookTypeId,
-                model.SelectedConditionId,
-                model.SelectedGenreId,
-                model.SelectedPublisherId,
-                model.Year,
-                model.ISBN,
-                model.Summary,
-                model.Price,
-                model.Quantity,
-                model.CoverImage?.InputStream,
-                model.CoverImage?.FileName);
-
+            if (!ModelState.IsValid)
+                return await InvalidCreateUpdateView(model);
+            var dto = new UpdateBookDto(model.Id, model.Name, model.Author, model.SelectedBookTypeId, model.SelectedConditionId, model.SelectedGenreId, model.SelectedPublisherId, model.Year, model.ISBN, model.Summary, model.Price, model.Quantity, model.CoverImage?.OpenReadStream(), model.CoverImage?.FileName);
             var result = await bookService.UpdateAsync(dto);
-
             return await ProcessBookResultAsync(model, result, $"{model.Name} has been updated");
         }
 
@@ -103,13 +77,11 @@ namespace Bookstore.Web.Areas.Admin.Controllers
             if (result.IsSuccess)
             {
                 TempData["Message"] = successMessage;
-
                 return RedirectToAction("Index");
             }
             else
             {
                 ModelState.AddModelError(nameof(model.CoverImage), result.ErrorMessage);
-
                 return await InvalidCreateUpdateView(model);
             }
         }
@@ -117,9 +89,7 @@ namespace Bookstore.Web.Areas.Admin.Controllers
         private async Task<ActionResult> InvalidCreateUpdateView(InventoryCreateUpdateViewModel model)
         {
             var referenceDataItemDtos = await referenceDataService.GetAllReferenceDataAsync();
-
             model.AddReferenceData(referenceDataItemDtos);
-
             return View("CreateUpdate", model);
         }
     }

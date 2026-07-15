@@ -193,3 +193,5 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+# AWS Transform artifact workspace
+artifactWorkspace/

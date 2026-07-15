@@ -1,9 +1,19 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Bookstore.Web.ViewModel;
 using Bookstore.Domain.Books;
 using System.Threading.Tasks;
 using Bookstore.Web.ViewModel.Home;
-using System.Web.Mvc;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bookstore.Web.Controllers
 {
@@ -11,7 +21,6 @@ namespace Bookstore.Web.Controllers
     public class HomeController : Controller
     {
         private readonly IBookService bookService;
-
         public HomeController(IBookService bookService)
         {
             this.bookService = bookService;
@@ -20,7 +29,6 @@ namespace Bookstore.Web.Controllers
         public async Task<ActionResult> Index()
         {
             var books = await bookService.ListBestSellingBooksAsync(4);
-
             return View(new HomeIndexViewModel(books));
         }
 

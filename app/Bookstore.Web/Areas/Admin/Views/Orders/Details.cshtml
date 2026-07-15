@@ -1,8 +1,8 @@
-﻿@using Bookstore.Domain.Orders
+@using Bookstore.Domain.Orders
 
 @model Bookstore.Web.Areas.Admin.Models.Orders.OrderDetailsViewModel
 
-@Html.Partial("_MessageBanner")
+<partial name="_MessageBanner" />
 
 <div class="d-flex m-3">
     <h5>Order Details</h5>
@@ -38,8 +38,7 @@
                     <dd class="col-9">
                         <form method="post">
                             <div class="d-flex">
-                                @Html.HiddenFor(m => m.OrderId)
-                                <input type="hidden" asp-for="@Model.OrderId" />
+                                <input type="hidden" asp-for="OrderId" />
                                 <button type="submit" class="btn btn-primary ms-2">Update</button>
                             </div>
 
@@ -104,6 +103,6 @@
 
 <div class="row">
     <div class="col-8">
-        @Html.ActionLink("Back", "Index", new { controller = "Orders" }, new { @class = "btn btn-primary" })
+        <a asp-action="Index" asp-controller="Orders" class="btn btn-primary">Back</a>
     </div>
 </div>

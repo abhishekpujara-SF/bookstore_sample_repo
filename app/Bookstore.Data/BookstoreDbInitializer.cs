@@ -1,14 +1,26 @@
-﻿using Bookstore.Domain.Books;
+using Bookstore.Domain.Books;
 using Bookstore.Domain.ReferenceData;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Data
 {
-    public class BookstoreDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    /// <summary>
+    /// Replaces the EF6 DropCreateDatabaseIfModelChanges initializer.
+    /// Call <see cref="SeedAsync"/> at application startup (after EnsureCreated or migrations)
+    /// to populate initial data if the database is empty.
+    /// </summary>
+    public static class BookstoreDbInitializer
     {
-        protected override void Seed(ApplicationDbContext context)
+        public static async System.Threading.Tasks.Task SeedAsync(ApplicationDbContext context)
         {
+            // Only seed if the ReferenceData table is empty
+            if (await context.ReferenceData.AnyAsync())
+            {
+                return;
+            }
+
             var referenceDataItems = new List<ReferenceDataItem> {
                 new ReferenceDataItem(ReferenceDataType.BookType, "Hardcover") { Id = 1 },
                 new ReferenceDataItem(ReferenceDataType.BookType, "Trade Paperback") { Id = 2 },
@@ -54,7 +66,7 @@ namespace Bookstore.Data
 
             context.Book.AddRange(books);
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

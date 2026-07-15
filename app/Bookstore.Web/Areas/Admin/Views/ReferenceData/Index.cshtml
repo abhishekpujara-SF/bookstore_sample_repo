@@ -1,4 +1,4 @@
-﻿@using Bookstore.Domain.ReferenceData
+@using Bookstore.Domain.ReferenceData
 @using Bookstore.Web.Helpers
 
 @model Bookstore.Web.Areas.Admin.Models.ReferenceData.ReferenceDataIndexViewModel
@@ -10,14 +10,14 @@
 <div class="d-flex m-3">
     <h5 class="me-auto">Reference Data</h5>
 
-    @Html.ActionLink("New Reference Data Item", "Create", new { controller = "ReferenceData" }, new { @class = "btn btn-primary" })
+    <a asp-action="Create" asp-controller="ReferenceData" class="btn btn-primary">New Reference Data Item</a>
 
 </div>
 
 <div class="card m-3">
     <div class="card-header">
         <div class="d-flex justify-content-end">
-            @Html.Partial("_Paginator")
+            <partial name="_Paginator" />
         </div>
     </div>
 
@@ -47,7 +47,7 @@
                             <td>@item.ReferenceDataType</td>
                             <td>@item.Text</td>
                             <td>
-                                @Html.ActionLink("Update", "Update", new { controller = "ReferenceData", id = item.Id }, new { @class = "card-link" })
+                                <a asp-action="Update" asp-controller="ReferenceData" asp-route-id="@item.Id" class="card-link">Update</a>
                             </td>
                         </tr>
                     }
@@ -58,7 +58,7 @@
 
     <div class="card-footer">
         <div class="d-flex justify-content-end">
-            @Html.Partial("_Paginator")
+            <partial name="_Paginator" />
         </div>
     </div>
 </div>

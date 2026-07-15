@@ -1,8 +1,16 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+using System.Threading.Tasks;
 using Bookstore.Domain.Offers;
 using Bookstore.Domain.ReferenceData;
 using Bookstore.Web.Areas.Admin.Models.Offers;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bookstore.Web.Areas.Admin.Controllers
 {
@@ -10,7 +18,6 @@ namespace Bookstore.Web.Areas.Admin.Controllers
     {
         private readonly IOfferService offerService;
         private readonly IReferenceDataService referenceDataService;
-
         public OffersController(IOfferService offerService, IReferenceDataService referenceDataService)
         {
             this.offerService = offerService;
@@ -21,7 +28,6 @@ namespace Bookstore.Web.Areas.Admin.Controllers
         {
             var offers = await offerService.GetOffersAsync(filters, pageIndex, pageSize);
             var referenceData = await referenceDataService.GetAllReferenceDataAsync();
-
             return View(new OfferIndexViewModel(offers, referenceData));
         }
 
@@ -52,11 +58,8 @@ namespace Bookstore.Web.Areas.Admin.Controllers
         private async Task<ActionResult> UpdateOfferStatus(int id, OfferStatus status, string message)
         {
             var dto = new UpdateOfferStatusDto(id, status);
-
             await offerService.UpdateOfferStatusAsync(dto);
-
             TempData["Message"] = message;
-
             return RedirectToAction("Index");
         }
     }

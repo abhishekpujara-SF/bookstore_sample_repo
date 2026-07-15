@@ -1,4 +1,4 @@
-﻿@model Bookstore.Web.ViewModel.ShoppingCart.ShoppingCartIndexViewModel
+@model Bookstore.Web.ViewModel.ShoppingCart.ShoppingCartIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +6,7 @@
 
 <div class="panel-body">
     
-    @Html.Partial("_Notification")
+    <partial name="_Notification" />
 
     <p style="text-align: center">
         <h1>Cart</h1>
@@ -35,11 +35,11 @@
         @if (!User.Identity.IsAuthenticated)
         {
             <p>Please log in to complete your order.</p>
-            @Html.ActionLink("Log In", "Login", "Authentication", new { Area = "" }, new { @class = "btn" })
+            <a asp-action="Login" asp-controller="Authentication" asp-area="" class="btn">Log In</a>
         }
         else
         {
-            @Html.ActionLink("Check Out", "Index", "Checkout", new { Area = "" }, new { @class = "btn" })
+            <a asp-action="Index" asp-controller="Checkout" asp-area="" class="btn">Check Out</a>
         }
 
         <table class="table">
@@ -82,11 +82,10 @@
                     <p>Are you sure you want to remove this item from your shopping cart?</p>
                 </div>
                 <div class="modal-footer">
-                    @using (Html.BeginForm())
-                    {
+                    <form method="post">
                         <button id="confirmDeleteButton" type="submit" class="btn btn-primary" formaction="@Url.Action("Delete")">Yes, Remove</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Don't Remove</button>
-                    }
+                    </form>
                 </div>
             </div>
         </div>

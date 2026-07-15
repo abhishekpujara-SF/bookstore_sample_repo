@@ -1,15 +1,22 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.SessionState;
+using System.IO;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Bookstore.Web.Helpers
 {
     public static class MvcHelpers
     {
-        public static IEnumerable<SelectListItem> GetSelectListForEnum<T>(this HtmlHelper html, string emptyItem = null)
+        public static IEnumerable<SelectListItem> GetSelectListForEnum<T>(this IHtmlHelper html, string emptyItem = null)
             where T : Enum
         {
             if (!string.IsNullOrEmpty(emptyItem))
@@ -19,6 +26,7 @@ namespace Bookstore.Web.Helpers
                     Text = emptyItem
                 };
             }
+
             foreach (var val in Enum.GetValues(typeof(T)))
             {
                 yield return new SelectListItem()
@@ -26,7 +34,6 @@ namespace Bookstore.Web.Helpers
                     Text = Enum.GetName(typeof(T), val)
                 };
             }
-
         }
     }
 }

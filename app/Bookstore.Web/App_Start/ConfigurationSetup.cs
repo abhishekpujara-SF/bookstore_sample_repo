@@ -1,27 +1,27 @@
-﻿using Amazon.SimpleSystemsManagement;
+using Amazon.SimpleSystemsManagement;
 using Amazon.SimpleSystemsManagement.Model;
 using BobsBookstoreClassic.Data;
-using Bookstore.Common;
 
 namespace Bookstore.Web
 {
     public static class ConfigurationSetup
     {
+        private const string AppName = "BobsBookstore";
+
         public static void ConfigureConfiguration()
         {
-            var rootPath = "/" + Constants.AppName;
+            var rootPath = "/" + AppName;
 
             const string databasePath = "/Database";
             const string authenticationPath = "/Authentication";
             const string fileServicePath = "/Files";
-
 
             if (BookstoreConfiguration.GetSetting("Services/Database") == "aws")
             {
                 using (var client = new AmazonSimpleSystemsManagementClient())
                 {
                     var request = new GetParameterRequest { Name = $"{rootPath}{databasePath}/ConnectionStrings/BookstoreDatabaseConnection" };
-                    var response = client.GetParameter(request);
+                    var response = client.GetParameterAsync(request).GetAwaiter().GetResult();
 
                     BookstoreConfiguration.AddSetting(response.Parameter.Name.Replace($"{rootPath}{databasePath}/", string.Empty), response.Parameter.Value);
                 }
@@ -32,7 +32,7 @@ namespace Bookstore.Web
                 using (var client = new AmazonSimpleSystemsManagementClient())
                 {
                     var request = new GetParametersByPathRequest { Path = $"{rootPath}{authenticationPath}/", Recursive = true };
-                    var response = client.GetParametersByPath(request);
+                    var response = client.GetParametersByPathAsync(request).GetAwaiter().GetResult();
 
                     foreach (var parameter in response.Parameters)
                     {
@@ -46,7 +46,7 @@ namespace Bookstore.Web
                 using (var client = new AmazonSimpleSystemsManagementClient())
                 {
                     var request = new GetParametersByPathRequest { Path = $"{rootPath}{fileServicePath}/", Recursive = true };
-                    var response = client.GetParametersByPath(request);
+                    var response = client.GetParametersByPathAsync(request).GetAwaiter().GetResult();
 
                     foreach (var parameter in response.Parameters)
                     {
