@@ -93,24 +93,24 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bookstore.Domain\Bookstore.Domain.csproj">
-      <Project>{d38deaea-ce1c-4309-83c8-626d44ca5301}</Project>
-      <Name>Bookstore.Domain</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="AWSSDK.Rekognition">
       <Version>3.7.400.129</Version>
     </PackageReference>
     <PackageReference Include="AWSSDK.S3">
       <Version>3.7.416.5</Version>
     </PackageReference>
-    <PackageReference Include="EntityFramework">
+        <PackageReference Include="EntityFramework">
       <Version>6.5.1</Version>
     </PackageReference>
     <PackageReference Include="Magick.NET-Q8-AnyCPU">
       <Version>14.6.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bookstore.Domain\Bookstore.Domain.csproj">
+      <Project>{eceeb3cb-16c9-4358-a250-65837fe71243}</Project>
+      <Name>Bookstore.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

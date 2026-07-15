@@ -74,6 +74,9 @@
     <Reference Include="AWSSDK.SimpleSystemsManagement, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AWSSDK.SimpleSystemsManagement.3.7.404.10\lib\net45\AWSSDK.SimpleSystemsManagement.dll</HintPath>
     </Reference>
+    <Reference Include="Bookstore.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Bookstore.Common.1.0.0\lib\net48\Bookstore.Common.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -147,6 +150,9 @@
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=9.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -494,6 +500,7 @@
     <Content Include="Areas\Admin\Views\Shared\_Paginator.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="libman.json" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="ILLink\ILLink.Descriptors.LibraryBuild.xml" />
     <Content Include="Scripts\jquery-3.7.1.js" />
@@ -687,30 +694,16 @@
     <Content Include="Scripts\jquery-3.7.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bookstore.Common\Bookstore.Common.csproj">
-      <Project>{368f04e5-5093-4987-99a1-92bf5c8e8673}</Project>
-      <Name>Bookstore.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bookstore.Data\Bookstore.Data.csproj">
       <Project>{3212526f-2d18-4a21-9b14-8b045ebf96f4}</Project>
       <Name>Bookstore.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Bookstore.Domain\Bookstore.Domain.csproj">
-      <Project>{d38deaea-ce1c-4309-83c8-626d44ca5301}</Project>
+      <Project>{eceeb3cb-16c9-4358-a250-65837fe71243}</Project>
       <Name>Bookstore.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\..\packages\AWSSDK.CloudWatchLogs.3.7.410.17\analyzers\dotnet\cs\AWSSDK.CloudWatchLogs.CodeAnalysis.dll" />
-    <Analyzer Include="..\..\packages\AWSSDK.CloudWatchLogs.3.7.410.17\analyzers\dotnet\cs\SharedAnalysisCode.dll" />
-    <Analyzer Include="..\..\packages\AWSSDK.Rekognition.3.7.400.129\analyzers\dotnet\cs\AWSSDK.Rekognition.CodeAnalysis.dll" />
-    <Analyzer Include="..\..\packages\AWSSDK.Rekognition.3.7.400.129\analyzers\dotnet\cs\SharedAnalysisCode.dll" />
-    <Analyzer Include="..\..\packages\AWSSDK.S3.3.7.416.5\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
-    <Analyzer Include="..\..\packages\AWSSDK.S3.3.7.416.5\analyzers\dotnet\cs\SharedAnalysisCode.dll" />
-    <Analyzer Include="..\..\packages\AWSSDK.SimpleSystemsManagement.3.7.404.10\analyzers\dotnet\cs\AWSSDK.SimpleSystemsManagement.CodeAnalysis.dll" />
-    <Analyzer Include="..\..\packages\AWSSDK.SimpleSystemsManagement.3.7.404.10\analyzers\dotnet\cs\SharedAnalysisCode.dll" />
-  </ItemGroup>
-  <PropertyGroup>
+    <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>

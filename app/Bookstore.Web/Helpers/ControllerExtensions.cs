@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Bookstore.Common;
 
 namespace Bookstore.Web.Helpers
 {
@@ -6,7 +7,7 @@ namespace Bookstore.Web.Helpers
     {
         public static void SetNotification(this Controller controller, string message)
         {
-            controller.TempData["Notification"] = message;
+            controller.TempData["Notification"] = message.Humanize();
         }
     }
 }
