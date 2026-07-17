@@ -1,6 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Amazon.CDK;
 using Amazon.CDK.AWS.CloudFront;
+using Amazon.CDK.AWS.CloudFront.Origins;
 using Amazon.CDK.AWS.Cognito;
 using Amazon.CDK.AWS.IAM;
 using Amazon.CDK.AWS.S3;
@@ -60,54 +61,22 @@ public class CoreStack : Stack
     {
         //=========================================================================================
         // Access to the bucket is only granted to traffic coming from a CloudFront distribution
+        // using Origin Access Control (OAC), which replaces the legacy Origin Access Identity (OAI).
         //
-        var cloudfrontOAI = new OriginAccessIdentity(this, "CloudFrontOriginAccessIdentity");
-
-        var policyProps = new PolicyStatementProps
-        {
-            Actions = new[] { "s3:GetObject" },
-            Resources = new[] { ImageBucket.ArnForObjects("*") },
-            Principals = new[]
-            {
-                new CanonicalUserPrincipal
-                (
-                    cloudfrontOAI.CloudFrontOriginAccessIdentityS3CanonicalUserId
-                )
-            }
-        };
-
-        ImageBucket.AddToResourcePolicy(new PolicyStatement(policyProps));
-
         // Place a CloudFront distribution in front of the storage bucket. S3 will only respond to
         // requests for objects if that request came from the CloudFront distribution.
-        var distProps = new CloudFrontWebDistributionProps
+        var distribution = new Distribution(this, "CloudFrontDistribution", new DistributionProps
         {
-            OriginConfigs = new[]
+            DefaultBehavior = new BehaviorOptions
             {
-                new SourceConfiguration
-                {
-                    S3OriginSource = new S3OriginConfig
-                    {
-                        S3BucketSource = ImageBucket,
-                        OriginAccessIdentity = cloudfrontOAI
-                    },
-                    Behaviors = new []
-                    {
-                        new Behavior
-                        {
-                            IsDefaultBehavior = true,
-                            Compress = true,
-                            AllowedMethods = CloudFrontAllowedMethods.GET_HEAD_OPTIONS
-                        }
-                    }
-                }
-            },
-            // Require HTTPS between viewer and CloudFront; CloudFront to
-            // origin (the bucket) will use HTTP but could also be set to require HTTPS
-            ViewerProtocolPolicy = ViewerProtocolPolicy.REDIRECT_TO_HTTPS
-        };
-
-        var distribution = new CloudFrontWebDistribution(this, "CloudFrontDistribution", distProps);
+                Origin = S3BucketOrigin.WithOriginAccessControl(ImageBucket),
+                Compress = true,
+                AllowedMethods = AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+                // Require HTTPS between viewer and CloudFront; CloudFront to
+                // origin (the bucket) will use HTTP but could also be set to require HTTPS
+                ViewerProtocolPolicy = ViewerProtocolPolicy.REDIRECT_TO_HTTPS
+            }
+        });
 
         _ = new StringParameter(this, "CloudFrontDistributionSSMParameter", new StringParameterProps
         {
