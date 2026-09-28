@@ -1,4 +1,4 @@
-﻿using System.Web.Optimization;
+// TODO mvc-webapi-migration: Replace System.Web.Optimization bundling with ASP.NET Core approach
 
 namespace Bookstore.Web
 {

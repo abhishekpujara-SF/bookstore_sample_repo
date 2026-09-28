@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace Bookstore.Web.Helpers
 {

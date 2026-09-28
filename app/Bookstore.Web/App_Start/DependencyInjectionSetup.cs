@@ -1,7 +1,7 @@
-﻿using System.IO;
+using System.IO;
 using System.Reflection;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Amazon.Rekognition;
 using Amazon.S3;
 using Autofac;

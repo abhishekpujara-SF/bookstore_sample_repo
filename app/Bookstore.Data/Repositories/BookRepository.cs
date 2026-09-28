@@ -1,9 +1,9 @@
-﻿using Bookstore.Domain;
+using Bookstore.Domain;
 using Bookstore.Domain.Books;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 

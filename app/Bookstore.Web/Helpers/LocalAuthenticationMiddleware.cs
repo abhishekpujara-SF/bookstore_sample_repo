@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using Microsoft.Owin;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
+using Microsoft.AspNetCore.Http;
 using Bookstore.Domain.Customers;
 
 namespace Bookstore.Web.Helpers
@@ -26,13 +26,14 @@ namespace Bookstore.Web.Helpers
 
                 await SaveCustomerDetailsAsync();
 
-                var userCookie = new HttpCookie("LocalAuthentication") { Expires = DateTime.Now.AddDays(1) };
-
-                HttpContext.Current.Response.Cookies.Add(userCookie);
+                // TODO auth-security-migration: Replace HttpContext.Current with ASP.NET Core context
+                // var userCookie = new HttpCookie("LocalAuthentication") { Expires = DateTime.Now.AddDays(1) };
+                // HttpContext.Current.Response.Cookies.Add(userCookie);
 
                 context.Response.Redirect("/");
             }
-            else if (HttpContext.Current.Request.Cookies["LocalAuthentication"] != null)
+            // TODO auth-security-migration: Replace HttpContext.Current with ASP.NET Core context
+            else if (false) // HttpContext.Current.Request.Cookies["LocalAuthentication"] != null)
             {
                 CreateClaimsPrincipal(context);
 
@@ -61,7 +62,8 @@ namespace Bookstore.Web.Helpers
 
         private async Task SaveCustomerDetailsAsync()
         {
-            var identity = (ClaimsIdentity)HttpContext.Current.User.Identity;
+            // TODO auth-security-migration: Replace HttpContext.Current with ASP.NET Core context
+            var identity = (ClaimsIdentity)null; // HttpContext.Current.User.Identity;
 
             var dto = new CreateOrUpdateCustomerDto(
                 identity.FindFirst("nameidentifier").Value,

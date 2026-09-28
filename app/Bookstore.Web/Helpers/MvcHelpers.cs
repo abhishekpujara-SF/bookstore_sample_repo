@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.SessionState;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+// TODO configuration-migration: Replace System.Web.SessionState with ASP.NET Core session
 
 namespace Bookstore.Web.Helpers
 {

@@ -1,14 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RollForward>Major</RollForward>
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- CDK Construct Library dependencies -->
-        <PackageReference Include="Amazon.CDK.Lib" Version="2.188.0" />
+        <!-- CDK Construct Library dependencies - updated for net8.0 compatibility -->
+        <PackageReference Include="Amazon.CDK.Lib" Version="2.180.0" />
         <PackageReference Include="Cdklabs.CdkNag" Version="2.35.66" />
         <PackageReference Include="Constructs" Version="10.4.2" />
 

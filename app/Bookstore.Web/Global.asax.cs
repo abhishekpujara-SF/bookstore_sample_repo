@@ -1,7 +1,7 @@
-﻿using System.Web;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+// TODO mvc-webapi-migration: Replace System.Web.Optimization bundling
+using Microsoft.AspNetCore.Routing;
 using NLog;
 
 namespace Bookstore.Web

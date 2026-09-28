@@ -1,7 +1,10 @@
-﻿using Bookstore.Domain.Books;
+// TODO data-access-migration: Replace with EF Core migration or seed data
+// This file is commented out because EF Core doesn't support Database.SetInitializer
+/*
+using Bookstore.Domain.Books;
 using Bookstore.Domain.ReferenceData;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Data
 {
@@ -58,3 +61,4 @@ namespace Bookstore.Data
         }
     }
 }
+*/
